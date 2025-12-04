@@ -8,6 +8,7 @@ const CAMPAIGN_ID_LIST = (process.env.DONORBOX_CAMPAIGN_IDS || "")
   .filter(Boolean)
   .map(String);
 const CAMPAIGN_IDS = new Set(CAMPAIGN_ID_LIST);
+console.log("Configured CAMPAIGN_IDS:", CAMPAIGN_IDS);
 const CAMPAIGN_NAME_MAP = new Map(
   CAMPAIGN_ID_LIST.map((id, idx) => [id, TEAM_NAMES[idx] || `Campaign ${id}`]),
 );
@@ -61,11 +62,6 @@ export default async function handler(req, res) {
     console.error("Error in /api/campaigns handler:", err);
     res.status(500).json({ error: "Unexpected error", details: String(err).slice(0, 200) });
   }
-}
-
-function filterCampaigns(campaigns, allowedIds) {
-  if (!allowedIds.size) return campaigns;
-  return campaigns.filter((campaign) => allowedIds.has(String(campaign.id)));
 }
 
 function rankCampaigns(campaigns) {
@@ -125,10 +121,10 @@ async function fetchData() {
   if (!Array.isArray(donationsRaw)) {
     throw new Error("Unexpected Donorbox response shape for /api/v1/donations");
   }
-  if(!CAMPAIGN_IDS) {
+  if (!CAMPAIGN_ID_LIST.length) {
     throw new Error("No CAMPAIGN_IDS configured");
   }
-  
+
   const filteredCampaigns = campaignsRaw.filter((campaign) => CAMPAIGN_IDS.has(String(campaign.id)));
   const filteredDonations = donationsRaw.filter((donation) => CAMPAIGN_IDS.has(String(donation?.campaign?.id)));
 
@@ -140,13 +136,12 @@ function aggregateChapters(donations) {
 
   for (const donation of donations) {
     const campaignId = donation?.campaign?.id;
-    if (!campaignId) continue;
-
     const chapterName = extractChapter(donation);
-    if (!chapterName) continue;
 
-    const amount = toNumber(donation.amount || donation.converted_amount || 0);
-    if (!amount) continue;
+    //!somente usar converted_amount. "amount" pode ser em outra moeda. 
+    // converted_amound é populado somente após transferência ser convertida pelo stripe (demora ~60s)
+    const amount = toNumber(donation?.converted_amount); //em BRL
+    if (!campaignId || !chapterName || !amount) continue;
 
     const key = String(campaignId);
     if (!byCampaign.has(key)) byCampaign.set(key, new Map());
@@ -167,6 +162,7 @@ function aggregateChapters(donations) {
   return result;
 }
 
+//busca pergunta em "aditional questions" do donorbox. como temos somente uma, essa é a de BL.
 function extractChapter(donation) {
   if (!donation?.questions || !Array.isArray(donation.questions)) return null;
   const question = donation.questions[0];
