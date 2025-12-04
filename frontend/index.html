@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Copa BRASA Leaderboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <h1>Copa BRASA Leaderboard</h1>
+          <div class="subtitle">Top four campaigns · Auto-refreshing</div>
+        </div>
+        <div class="updated" id="updated">Loading…</div>
+      </header>
+      <div class="leaderboard" id="leaderboard"></div>
+      <section class="regions">
+        <div class="section-title">Regional breakdown</div>
+        <div class="regions-grid" id="regions"></div>
+      </section>
+      <div class="error" id="error"></div>
+    </div>
+
+    <template id="campaign-template">
+      <div class="row">
+        <div class="bar" data-role="bar"></div>
+        <div class="content">
+          <div class="rank" data-role="rank"></div>
+          <div class="text">
+            <div class="label">Total raised</div>
+            <p class="name" data-role="name"></p>
+          </div>
+          <div class="total" data-role="total"></div>
+        </div>
+      </div>
+    </template>
+
+    <template id="region-template">
+      <article class="region-card">
+        <div class="region-header">
+          <div class="region-title">
+            <div class="region-name" data-role="region-name"></div>
+            <div class="region-rank" data-role="region-rank"></div>
+          </div>
+          <div class="region-total" data-role="region-total"></div>
+        </div>
+        <div class="chapter-list" data-role="chapter-list"></div>
+      </article>
+    </template>
+
+    <script src="main.js"></script>
+  </body>
+</html>

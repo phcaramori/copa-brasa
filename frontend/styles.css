@@ -1,0 +1,226 @@
+:root {
+  --bg: #0b1b2a;
+  --card: #102840;
+  --accent: #2dd36f;
+  --accent-2: #ffd447;
+  --text: #e9f1fb;
+  --text-2: #9bb3cc;
+  --bar-height: 56px;
+  --gap: 14px;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(45, 211, 111, 0.1), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(255, 212, 71, 0.12), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px 48px;
+}
+.wrap {
+  width: min(960px, 100%);
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+h1 {
+  font-size: 24px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.subtitle {
+  color: var(--text-2);
+  font-size: 14px;
+}
+.updated {
+  color: var(--text-2);
+  font-size: 12px;
+}
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  margin-top: 8px;
+}
+.regions {
+  margin-top: 28px;
+}
+.section-title {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 12px;
+}
+.regions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.region-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.region-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.region-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.region-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+.region-rank {
+  font-size: 12px;
+  color: var(--text-2);
+}
+.region-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chapter-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.chapter-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0b1b2a;
+  background: var(--accent-2);
+}
+.chapter-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+.chapter-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+.chapter-empty {
+  font-size: 13px;
+  color: var(--text-2);
+  padding: 8px 4px;
+}
+.row {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: 0.85;
+  transition: width 0.6s ease, opacity 0.3s ease;
+  min-width: 4%;
+}
+.content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 64px 1fr 140px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.rank {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent-2);
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.label {
+  font-size: 12px;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.name {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}
+.total {
+  font-size: 14px;
+  color: var(--text-2);
+}
+.delta {
+  font-size: 12px;
+  color: var(--text-2);
+}
+.error {
+  margin-top: 12px;
+  color: #ff9f9f;
+  font-size: 13px;
+}
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+  .content {
+    grid-template-columns: 52px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .total {
+    justify-self: end;
+    grid-column: 2;
+  }
+}
