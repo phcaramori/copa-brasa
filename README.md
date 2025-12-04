@@ -1,6 +1,4 @@
-# Copa BRASA Leaderboard (Local Dev)
-
-Quick start for running the static leaderboard and serverless API locally.
+# Placar Copa BRASA
 
 ## Setup
 1) Copy `.env.example` to `.env` and fill values:  
@@ -15,8 +13,3 @@ npm run dev
 # open http://localhost:4173
 ```
 This serves `frontend/index.html` and mounts the API at `/api/campaigns`.
-
-## Notes
-- Uses Node 18+ native `fetch`.  
-- CORS is open (`*`) for easier embedding during demos.  
-- Backend aggregates chapter totals from the mandatory dropdown question on each donation for the specified campaigns.
