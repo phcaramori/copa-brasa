@@ -5,7 +5,7 @@ const PLACEHOLDER_CAMPAIGNS = TEAM_ORDER.map((name, idx) => ({
   id: `placeholder-${idx + 1}`,
   name,
   totalRaised: 0,
-  currency: "USD",
+  currency: "BRL",
   rank: idx + 1,
   chapters: [],
 }));
