@@ -26,7 +26,7 @@ async function load() {
     const campaigns = data.campaigns || [];
     renderLeaderboard(campaigns);
     renderRegions(campaigns);
-    updated.textContent = `Updated ${formatTime(data.updatedAt || new Date().toISOString())}`;
+    updated.textContent = `Atualizado ${formatTime(data.updatedAt || new Date().toISOString())}`;
   } catch (err) {
     errorBox.textContent = `Unable to load data. ${err.message}`;
   }
