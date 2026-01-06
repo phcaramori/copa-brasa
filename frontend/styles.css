@@ -71,6 +71,44 @@ h1 {
   gap: var(--gap);
   margin-top: 8px;
 }
+.total-row {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+}
+.total-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.total-label {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.total-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+.total-cap {
+  font-size: 12px;
+  color: var(--text-2);
+}
+.total-track {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.total-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.6s ease;
+}
 .map-section {
   margin-top: 16px;
   margin-bottom: 8px;
@@ -142,10 +180,8 @@ h1 {
   margin-top: 28px;
 }
 .section-title {
-  font-size: 14px;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-2);
+  color: var(--text-1);
   margin-bottom: 12px;
 }
 .donate-actions {

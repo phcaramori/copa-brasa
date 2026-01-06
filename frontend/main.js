@@ -1,5 +1,6 @@
 const ENDPOINT = "/api/campaigns";
 const REFRESH_MS = 15000;
+const TOTAL_CAP = 10000;
 const TEAM_ORDER = ["Time South", "Time North", "Time West", "Time Europa"];
 const PLACEHOLDER_CAMPAIGNS = TEAM_ORDER.map((name, idx) => ({
   id: `placeholder-${idx + 1}`,
@@ -41,6 +42,25 @@ function renderLeaderboard(items) {
     leaderboard.appendChild(empty);
     return;
   }
+
+  const currency = items[0]?.currency || "USD";
+  const totalRaised = items.reduce((sum, campaign) => sum + (campaign.totalRaised || 0), 0);
+  const totalPct = Math.min((totalRaised / TOTAL_CAP) * 100, 100);
+  const summary = document.createElement("div");
+  summary.className = "total-row";
+  summary.innerHTML = `
+    <div class="total-header">
+      <div>
+        <div class="total-label">Total arrecadado (todas as regiões)</div>
+        <div class="total-value">${formatMoney(totalRaised, currency)}</div>
+      </div>
+      <div class="total-cap">Meta fixa: ${formatMoney(TOTAL_CAP, currency)}</div>
+    </div>
+    <div class="total-track">
+      <div class="total-fill" style="width: ${totalPct}%"></div>
+    </div>
+  `;
+  leaderboard.appendChild(summary);
 
   const max = items.reduce((highest, campaign) => Math.max(highest, campaign.totalRaised || 0), 0);
   items.forEach((item) => {
