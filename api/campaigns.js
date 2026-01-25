@@ -1,5 +1,6 @@
 // Fetch four Donorbox campaigns, cache in memory, return rankings
 
+const FX_USD_TO_BRL = 5.3; //valor fixo para conversão BRL -> USD em doações individuais
 const CACHE_TTL_MS = 30000;
 const TEAM_NAMES = ["Time South", "Time North", "Time West", "Time Europa"];
 const CAMPAIGN_ID_LIST = (process.env.DONORBOX_CAMPAIGN_IDS || "")
@@ -140,8 +141,16 @@ function aggregateChapters(donations) {
 
     //!somente usar converted_amount. "amount" pode ser em outra moeda. 
     // converted_amound é populado somente após transferência ser convertida pelo stripe (demora ~60s)
-    const amount = toNumber(donation?.converted_amount); //em BRL
+    let amount = toNumber(donation?.converted_amount); //em BRL, sempre
     if (!campaignId || !chapterName || !amount) continue;
+
+    if(donation.converted_currency == 'BRL') {
+      // Gambiarra. Donorbox recebe doações em múltiplas moedas. esse field 'converted_currency' sempre será em BRL devido a nossa conta bancária ser em BRL.
+      // Valor de campanha (retornado de campaigns em fetchData()) já é em USD. Doações individuais podem ser em outra moeda.
+      // Então esperamos conversão de todas moedas para BRL, e depois convertemos BRL -> USD aqui. 
+      // (diff em FX pode fazer soma de doações por BL não = valor total)
+      amount = amount / FX_USD_TO_BRL; //CONVERSÃO BRL -> USD
+    }
 
     const key = String(campaignId);
     if (!byCampaign.has(key)) byCampaign.set(key, new Map());
